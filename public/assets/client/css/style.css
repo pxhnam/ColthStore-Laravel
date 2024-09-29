@@ -1,0 +1,34 @@
+body {
+    font-family: "Poppins-Regular";
+}
+a {
+    font-family: Poppins-Medium;
+    color: #717fe0;
+}
+nav .link-login {
+    font-size: 14px;
+    color: #333;
+    padding: 5px 0px;
+    margin-left: 30px;
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+.txt-danger {
+    font-family: Poppins;
+    color: #dc4c64;
+}
+.txt-success {
+    font-family: Poppins;
+    color: #75b798;
+}
+.arrow-slick3 {
+    color: #fff;
+    background-color: #ffffff00;
+}
+.arrow-slick3:hover {
+    color: #333;
+    background-color: #ffffff00;
+}
+.arrow-slick3:active {
+    font-size: 30px;
+}
