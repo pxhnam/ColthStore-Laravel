@@ -66,7 +66,7 @@
                         <li @class([
                             'active-menu' => request()->routeIs(['carts', 'carts.*']),
                         ])>
-                            <a href="{{ route('carts') }}">Shoping Cart</a>
+                            <a href="{{ route('carts') }}">Cart</a>
                         </li>
 
                         <li>
@@ -237,7 +237,7 @@
                 'active-menu' => request()->routeIs(['carts', 'carts.*']),
             ])>
                 {{-- <a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a> --}}
-                <a href="{{ route('carts') }}">Shoping Cart</a>
+                <a href="{{ route('carts') }}">Cart</a>
             </li>
 
             <li>
@@ -261,11 +261,11 @@
                 <img src="{{ asset('assets/client/images/icons/icon-close2.png') }}" alt="CLOSE">
             </button>
 
-            <form class="wrap-search-header flex-w p-l-15">
+            <form class="wrap-search-header flex-w p-l-15" action="{{ route('products.index') }}" method="GET">
                 <button class="flex-c-m trans-04">
                     <i class="zmdi zmdi-search"></i>
                 </button>
-                <input class="plh3" type="text" name="search" placeholder="Search...">
+                <input class="plh3" type="text" name="q" placeholder="Search...">
             </form>
         </div>
     </div>

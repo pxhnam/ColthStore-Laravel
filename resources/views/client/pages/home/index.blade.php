@@ -18,7 +18,7 @@
     <x-client.sections.categories />
 
     <!-- Product -->
-    <x-client.sections.product-list title='Product Overview' random=true />
+    <livewire:client.sections.product-list title='Product Overview' />
 @endsection
 
 @push('modals')

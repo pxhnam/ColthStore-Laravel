@@ -11,7 +11,7 @@
 @endpush
 
 @section('content')
-    <x-client.sections.product-list />
+    <livewire:client.sections.product-list />
 @endsection
 
 @push('modals')

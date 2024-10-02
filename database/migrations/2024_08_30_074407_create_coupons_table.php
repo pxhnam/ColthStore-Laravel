@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\CouponType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,9 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('coupons', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('code');
+            $table->string('code')->primary();
+            $table->integer('value');
+            $table->enum('type', CouponType::getValues());
+            $table->integer('min')->default(0);
+            $table->integer('max')->nullable();
             $table->text('desc');
+            $table->dateTime('start_date');
+            $table->dateTime('expiry_date');
             $table->timestamps();
         });
     }

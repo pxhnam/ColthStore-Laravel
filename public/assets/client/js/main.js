@@ -125,27 +125,27 @@
     var $filter = $(".filter-tope-group");
 
     // filter items on button click
-    $filter.each(function () {
-        $filter.on("click", "button", function () {
-            var filterValue = $(this).attr("data-filter");
-            $topeContainer.isotope({ filter: filterValue });
-        });
-    });
+    // $filter.each(function () {
+    //     $filter.on("click", "button", function () {
+    //         var filterValue = $(this).attr("data-filter");
+    //         $topeContainer.isotope({ filter: filterValue });
+    //     });
+    // });
 
     // init Isotope
-    $(window).on("load", function () {
-        var $grid = $topeContainer.each(function () {
-            $(this).isotope({
-                itemSelector: ".isotope-item",
-                layoutMode: "fitRows",
-                percentPosition: true,
-                animationEngine: "best-available",
-                masonry: {
-                    columnWidth: ".isotope-item",
-                },
-            });
-        });
-    });
+    // $(window).on("load", function () {
+    //     var $grid = $topeContainer.each(function () {
+    //         $(this).isotope({
+    //             itemSelector: ".isotope-item",
+    //             layoutMode: "fitRows",
+    //             percentPosition: true,
+    //             animationEngine: "best-available",
+    //             masonry: {
+    //                 columnWidth: ".isotope-item",
+    //             },
+    //         });
+    //     });
+    // });
 
     var isotopeButton = $(".filter-tope-group button");
 
