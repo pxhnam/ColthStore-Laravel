@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Enums\ProductState;
 use Livewire\Attributes\Url;
 use App\Helpers\NumberFormat;
+use App\Models\Color;
 use Illuminate\Support\Facades\Log;
 
 class ProductList extends Component
@@ -15,6 +16,7 @@ class ProductList extends Component
     public $title;
     public $categories;
     public $products;
+    public $colors;
     public $perPage = 12;
     public $totalLoaded = 0;
     public $totalProducts = 0;
@@ -22,11 +24,14 @@ class ProductList extends Component
     public $search;
     #[Url(history: true)]
     public $category;
+    #[Url(history: true)]
+    public $selectedColors = [];
 
     public function mount($title = '')
     {
         $this->title = $title;
         $this->categories = Category::select('id', 'name')->take(5)->get();
+        $this->colors = Color::select('id', 'name', 'pic')->get();
         $this->products = collect();
         $this->filterProducts();
     }
@@ -47,11 +52,21 @@ class ProductList extends Component
                 if ($category) {
                     $products->where('category_id', $category->id);
                 }
-                // $products->where('category_id', $this->category);
             }
 
             if (!empty($this->search)) {
                 $products->where('name', 'like', '%' . $this->search . '%');
+            }
+
+            if (!empty($this->selectedColors)) {
+                $colorIds = Color::whereIn('name', $this->selectedColors)->pluck('id');
+
+                $products->whereHas(
+                    'variants',
+                    function ($query) use ($colorIds) {
+                        $query->whereIn('color_id', $colorIds);
+                    }
+                );
             }
 
             $this->totalProducts = $products->count();
@@ -83,6 +98,18 @@ class ProductList extends Component
         $this->resetProducts();
     }
 
+    public function toggleColor($color)
+    {
+        if (($key = array_search($color, $this->selectedColors)) !== false) {
+            unset($this->selectedColors[$key]);
+        } else {
+            $this->selectedColors[] = $color;
+        }
+
+        $this->selectedColors = array_values($this->selectedColors);
+        $this->resetProducts();
+    }
+
     public function loadMore()
     {
         $this->filterProducts();
@@ -104,6 +131,9 @@ class ProductList extends Component
             ],
             'category' => [
                 'as' => 'cty',
+            ],
+            'selectedColors' => [
+                'as' => 'colors',
             ]
         ];
     }

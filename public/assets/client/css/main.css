@@ -1941,6 +1941,40 @@ input.num-product::-webkit-inner-spin-button {
     visibility: visible;
     opacity: 1;
 }
+/* Custom Checkbox */
+.custom-checkbox {
+    display: none;
+}
+
+.checkbox-label {
+    display: inline-block;
+    width: 17px;
+    height: 17px;
+    background-color: #fff;
+    border: 1px solid #555;
+    margin-bottom: 0px;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+.custom-checkbox:checked + .checkbox-label {
+    background-color: #717fe0;
+    border: 1px solid #717fe0;
+}
+
+.custom-checkbox:checked + .checkbox-label::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+/* Custom Checkbox */
 
 /*//////////////////////////////////////////////////////////////////
 [ Table Shopping Cart ]*/
@@ -1963,43 +1997,49 @@ input.num-product::-webkit-inner-spin-button {
 }
 
 .table-shopping-cart .column-1 {
-    width: 133px;
-    padding-left: 50px;
+    padding-left: 30px;
 }
 
 .table-shopping-cart .column-2 {
-    width: 220px;
-    font-size: 15px;
+    /* width: 133px; */
+    padding-left: 10px;
+}
+.table-shopping-cart .column-2 img {
+    border-radius: 5px;
+    object-fit: cover;
 }
 
 .table-shopping-cart .column-3 {
+    width: 200px;
+    font-size: 15px;
+}
+.table-shopping-cart .column-3 a {
+    color: #555;
+    transition: all 0.3s ease;
+}
+.table-shopping-cart .column-3 a:hover {
+    color: #717fe0;
+}
+.table-shopping-cart .column-4 {
     width: 120px;
     font-size: 16px;
     text-align: center;
 }
 
-.table-shopping-cart .column-4 {
+.table-shopping-cart .column-5 {
     width: 145px;
     text-align: center;
 }
 
-.table-shopping-cart .column-5 {
+.table-shopping-cart .column-6 {
     width: 172px;
-    padding-right: 50px;
+    padding-right: 30px;
     text-align: center;
     font-size: 16px;
 }
 
 .table-shopping-cart .table_row {
     height: 185px;
-}
-
-.table-shopping-cart .table_row td {
-    padding-bottom: 20px;
-}
-
-.table-shopping-cart .table_row td.column-1 {
-    padding-bottom: 30px;
 }
 
 .table-shopping-cart .table_head th {
@@ -3068,9 +3108,9 @@ input.num-product::-webkit-inner-spin-button {
 
 /*---------------------------------------------*/
 .how-itemcart1 {
-    width: 60px;
+    width: 80px;
     position: relative;
-    margin-right: 20px;
+    margin-right: 15px;
     cursor: pointer;
 }
 

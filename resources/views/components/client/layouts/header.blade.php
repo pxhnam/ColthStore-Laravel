@@ -91,7 +91,7 @@
                     @auth
                         <livewire:client.components.cart-icon />
 
-                        <a href="#"
+                        <a href="javascript:void(0)"
                             class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
                             data-notify="0">
                             <i class="zmdi zmdi-favorite-outline"></i>
@@ -113,7 +113,7 @@
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </div>
 
-                        <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                        <a href="javascript:void(0)" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
                         <a class="link-login hov-cl1" href="{{ route('login') }}">
@@ -143,8 +143,8 @@
             @auth
                 <livewire:client.components.cart-icon />
 
-                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti"
-                    data-notify="0">
+                <a href="javascript:void(0)"
+                    class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
                 <form action="{{ route('logout') }}" method="POST">
@@ -162,7 +162,7 @@
                     <i class="zmdi zmdi-shopping-cart"></i>
                 </div>
 
-                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
+                <a href='javascript:void(0)' class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
                 <a class="link-login hov-cl1" href="{{ route('login') }}">

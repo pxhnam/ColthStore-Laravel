@@ -14,12 +14,12 @@
         <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
             <div class="layer-slick1 animated visible-false" data-appear="{{ $effectSub }}"
                 data-delay="{{ $delaySub }}">
-                <span class="ltext-101 cl2 respon2">{{ $sub }}</span>
+                <span class="ltext-101 cl2 respon2">{{ htmlspecialchars_decode($sub) }}</span>
             </div>
 
             <div class="layer-slick1 animated visible-false" data-appear="{{ $effectTitle }}"
                 data-delay="{{ $delayTitle }}">
-                <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">{{ $title }}</h2>
+                <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">{{ htmlspecialchars_decode($title) }}</h2>
             </div>
 
             <div class="layer-slick1 animated visible-false" data-appear="{{ $effectButton }}"

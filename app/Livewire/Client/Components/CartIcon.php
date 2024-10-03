@@ -3,6 +3,7 @@
 namespace App\Livewire\Client\Components;
 
 use Livewire\Component;
+use App\Enums\ProductState;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,11 +12,13 @@ class CartIcon extends Component
     public $count = 0;
 
     #[On('load-cart')]
-    #[On('count-cart')]
     public function mount()
     {
         if (Auth::check()) {
-            $this->count = Auth::user()->carts->count();
+            $carts = Auth::user()->carts->filter(function ($cart) {
+                return $cart->variant->product->state === ProductState::SHOW->value;
+            });
+            $this->count = $carts->count();
         }
     }
     public function render()

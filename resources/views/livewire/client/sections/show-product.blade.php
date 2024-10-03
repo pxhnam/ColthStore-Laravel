@@ -135,7 +135,7 @@
             </div>
         </div>
 
-        <div class="bor10 m-t-50 p-t-43 p-b-40">
+        <div class="bor10 m-t-50 p-t-43 p-b-40" wire:ignore>
             <!-- Tab01 -->
             <div class="tab01">
                 <!-- Nav tabs -->

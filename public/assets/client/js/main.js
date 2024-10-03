@@ -121,8 +121,8 @@
 
     /*==================================================================
     [ Isotope ]*/
-    var $topeContainer = $(".isotope-grid");
-    var $filter = $(".filter-tope-group");
+    // var $topeContainer = $(".isotope-grid");
+    // var $filter = $(".filter-tope-group");
 
     // filter items on button click
     // $filter.each(function () {
@@ -159,8 +159,26 @@
         });
     });
 
-    /*==================================================================
-    [ Filter / Search product ]*/
+    /*==================================================================*/
+    // [ Filter Link ]
+    function handleFilterLinkClick(filterCol) {
+        var $filterLinks = $(filterCol).find(".filter-link");
+        $filterLinks.on("click", function () {
+            $filterLinks.removeClass("filter-link-active");
+            $(this).addClass("filter-link-active");
+        });
+    }
+
+    handleFilterLinkClick(".filter-col1");
+    handleFilterLinkClick(".filter-col2");
+    // handleFilterLinkClick(".filter-col3");
+
+    $(document).on("click", ".filter-col3 .filter-link", function () {
+        $(this).toggleClass("filter-link-active");
+    });
+
+    /*==================================================================*/
+    // [ Filter / Search product ]
     $(".js-show-filter").on("click", function () {
         $(this).toggleClass("show-filter");
         $(".panel-filter").slideToggle(400);

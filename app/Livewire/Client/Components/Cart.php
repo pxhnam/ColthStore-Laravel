@@ -4,6 +4,7 @@ namespace App\Livewire\Client\Components;
 
 use Exception;
 use Livewire\Component;
+use App\Enums\ProductState;
 use Livewire\Attributes\On;
 use App\Helpers\NumberFormat;
 use App\Models\Cart as CartModel;
@@ -19,7 +20,11 @@ class Cart extends Component
     {
         try {
             if (Auth::check()) {
-                $this->carts = Auth::user()->carts;
+                $this->carts = Auth::user()->carts->filter(function ($cart) {
+                    return $cart->variant->product->state === ProductState::SHOW->value;
+                })->sortByDesc(function ($cart) {
+                    return $cart->created_at;
+                });
                 $this->total = $this->carts->sum(function ($cart) {
                     return $cart->variant->cost * $cart->num;
                 });
@@ -42,8 +47,8 @@ class Cart extends Component
             $cart = CartModel::findOrFail($id);
             if ($cart) {
                 $cart->delete();
-                $this->init();
-                $this->dispatch('count-cart');
+                $this->dispatch('load-cart');
+                $this->dispatch('update-select', id: $id);
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());

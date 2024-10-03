@@ -59,7 +59,7 @@
 
                         <ul>
                             <li class="p-b-6">
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
+                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active">
                                     Default
                                 </a>
                             </li>
@@ -77,10 +77,15 @@
                             </li>
 
                             <li class="p-b-6">
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active">
+                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
                                     Newness
                                 </a>
                             </li>
+                            {{-- <li class="p-b-6">
+                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active">
+                                    Newness
+                                </a>
+                            </li> --}}
 
                             <li class="p-b-6">
                                 <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
@@ -133,7 +138,7 @@
                             </li>
 
                             <li class="p-b-6">
-                                <a href="#" class="filter-link stext-106 trans-04">
+                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
                                     $200.00+
                                 </a>
                             </li>
@@ -146,65 +151,19 @@
                         </div>
 
                         <ul>
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #222;">
-                                    <i class="zmdi zmdi-circle"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
-                                    Black
-                                </a>
-                            </li>
-
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #4272d7;">
-                                    <i class="zmdi zmdi-circle"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04 filter-link-active">
-                                    Blue
-                                </a>
-                            </li>
-
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #b3b3b3;">
-                                    <i class="zmdi zmdi-circle"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
-                                    Grey
-                                </a>
-                            </li>
-
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #00ad5f;">
-                                    <i class="zmdi zmdi-circle"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
-                                    Green
-                                </a>
-                            </li>
-
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #fa4251;">
-                                    <i class="zmdi zmdi-circle"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
-                                    Red
-                                </a>
-                            </li>
-
-                            <li class="p-b-6">
-                                <span class="fs-15 lh-12 m-r-6" style="color: #aaa;">
-                                    <i class="zmdi zmdi-circle-o"></i>
-                                </span>
-
-                                <a href="javascript:void(0)" class="filter-link stext-106 trans-04">
-                                    White
-                                </a>
-                            </li>
+                            @foreach ($colors as $color)
+                                <li class="p-b-6">
+                                    <span class="fs-15 lh-12 m-r-6">
+                                        <img src="{{ asset('storage/' . $color->pic) }}" alt="{{ $color->name }}"
+                                            width="20px" height="20px" style="border-radius: 50%">
+                                    </span>
+                                    <a href="javascript:void(0)"
+                                        class="filter-link stext-106 trans-04{{ in_array($color->name, $selectedColors) ? ' filter-link-active' : '' }}"
+                                        wire:click="toggleColor('{{ $color->name }}')">
+                                        {{ $color->name }}
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 

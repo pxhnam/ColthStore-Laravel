@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('min')->default(0);
             $table->integer('max')->nullable();
             $table->text('desc');
+            $table->integer('usage_count')->default(0);
+            $table->integer('usage_limit')->nullable();
             $table->dateTime('start_date');
             $table->dateTime('expiry_date');
             $table->timestamps();

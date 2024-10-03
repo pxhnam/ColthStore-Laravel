@@ -59,13 +59,11 @@ Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-        Route::middleware('guest')
-            // ->withoutMiddleware('authorize')
-            ->group(function () {
-                Route::get('', [AdminAuthController::class, 'login'])->name('login');
-                Route::post('', [AdminAuthController::class, 'handleLogin'])->name('login');
-            });
-
+        Route::get('', [AdminAuthController::class, 'login'])
+            ->name('login');
+        Route::post('', [AdminAuthController::class, 'handleLogin'])
+            ->middleware('guest')
+            ->name('login');
 
         Route::middleware('authorize:admin')
             ->group(function () {
