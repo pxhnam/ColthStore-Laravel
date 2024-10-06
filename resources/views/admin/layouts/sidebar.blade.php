@@ -60,6 +60,13 @@
             <span class="tooltip">Banners</span>
         </li>
         <li>
+            <a href="{{ route('admin.coupons') }}" wire:navigate>
+                <i class='bx bxs-discount'></i>
+                <span class="links_name">Coupons</span>
+            </a>
+            <span class="tooltip">Coupons</span>
+        </li>
+        <li>
             <a href="#">
                 <i class='bx bx-pie-chart-alt-2'></i>
                 <span class="links_name">Analytics</span>

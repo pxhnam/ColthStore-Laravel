@@ -47,8 +47,8 @@ class Cart extends Component
             $cart = CartModel::findOrFail($id);
             if ($cart) {
                 $cart->delete();
-                $this->dispatch('load-cart');
                 $this->dispatch('update-select', id: $id);
+                $this->dispatch('load-cart');
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());

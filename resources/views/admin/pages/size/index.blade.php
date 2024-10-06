@@ -1,9 +1,9 @@
 @extends('admin.master')
-@section('title', 'Size')
+@section('title', 'Sizes')
 
 @section('content')
-    <div class="title">Size</div>
-    <p>List size</p>
+    <div class="title">Sizes</div>
+    <p>List sizes</p>
     <livewire:admin.table-size />
     <livewire:admin.update-size />
 @endsection

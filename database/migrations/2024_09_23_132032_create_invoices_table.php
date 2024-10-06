@@ -20,7 +20,7 @@ return new class extends Migration
                 ->on('users')
                 ->onDelete('cascade');
             $table->unsignedBigInteger('total');
-            $table->string('address');
+            $table->string('note');
             $table->enum('state', InvoiceState::getValues())->default(InvoiceState::PENDING->value);
             $table->timestamps();
         });

@@ -2044,7 +2044,7 @@ input.num-product::-webkit-inner-spin-button {
 
 .table-shopping-cart .table_head th {
     font-family: Poppins-Bold;
-    font-size: 13px;
+    font-size: 15px;
     color: #555;
     text-transform: uppercase;
     line-height: 1.6;
@@ -3135,6 +3135,7 @@ input.num-product::-webkit-inner-spin-button {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
     color: #fff;
     transition: all 0.3s;
     -webkit-transition: all 0.3s;

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
 
@@ -84,6 +85,7 @@ Route::prefix('admin')
                 Route::get('sizes', [SizeController::class, 'index'])->name('sizes');
                 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
                 Route::get('products', [AdminProductController::class, 'index'])->name('products');
+                Route::get('coupons', [CouponController::class, 'index'])->name('coupons');
                 Route::get('banners', [BannerController::class, 'index'])->name('banners');
             });
     });

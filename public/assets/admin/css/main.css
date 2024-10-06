@@ -374,3 +374,10 @@ table thead tr th i {
 .upload-image input {
     display: none;
 }
+.checkbox-group {
+    align-items: center;
+    gap: 12px;
+}
+.checkbox-group .invalid-feedback {
+    width: auto;
+}

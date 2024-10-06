@@ -33,14 +33,13 @@ class UpdateSize extends Component
                 $this->size->id = $id;
                 $size = Size::findOrFail($id);
                 $this->size->name = $size->name;
+                $this->title = 'Update Size';
+                $this->dispatch('open-modal');
             } catch (Exception $ex) {
                 Log::error($ex->getMessage());
                 $this->dispatch('error', 'An unexpected error occurred. Please try again.');
-                return;
             }
         }
-        $this->title = 'Update Size';
-        $this->dispatch('open-modal');
     }
 
     public function submit()

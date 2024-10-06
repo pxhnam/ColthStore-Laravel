@@ -38,40 +38,10 @@
                         @endif
                     @endif
                 </th>
-                <th scope="col" wire:click='sort("Slug")'>
-                    Slug
-                    @if ($sortBy == 'Slug')
-                        @if ($sortDirection === 'asc')
-                            <i class='bx bxs-chevron-up'></i>
-                        @else
-                            <i class='bx bxs-chevron-down'></i>
-                        @endif
-                    @endif
-                </th>
                 <th scope="col">Picture</th>
                 <th scope="col">Size</th>
                 <th scope="col">Color</th>
                 <th scope="col">Category</th>
-                {{-- <th scope="col" wire:click='sort("Category")'>
-                    Category
-                    @if ($sortBy == 'Category')
-                        @if ($sortDirection === 'asc')
-                            <i class='bx bxs-chevron-up'></i>
-                        @else
-                            <i class='bx bxs-chevron-down'></i>
-                        @endif
-                    @endif
-                </th> --}}
-                {{-- <th scope="col" wire:click='sort("Amount")'>
-                    Amount
-                    @if ($sortBy == 'Amount')
-                        @if ($sortDirection === 'asc')
-                            <i class='bx bxs-chevron-up'></i>
-                        @else
-                            <i class='bx bxs-chevron-down'></i>
-                        @endif
-                    @endif
-                </th> --}}
                 <th scope="col">Amount</th>
                 <th scope="col">Cost</th>
                 <th scope="col">State</th>
@@ -104,7 +74,6 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $product->name }}</td>
-                        <td class="text-primary">{{ $product->slug }}</td>
                         <td>
                             {{-- <img class="rounded" src="{{ asset('storage/' . $product->pic) }}"
                             alt="{{ $product->name }}" style="width: 130px"> --}}

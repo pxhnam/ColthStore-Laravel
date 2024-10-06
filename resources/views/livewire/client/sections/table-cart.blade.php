@@ -35,7 +35,7 @@
                                         <td class="column-2">
                                             <div class="how-itemcart1" wire:click="destroy('{{ $cart->id }}')">
                                                 <img src="{{ asset('storage/' . $cart->variant->product->images->first()->path) }}"
-                                                    alt="{{ $cart->variant->product->name }}">
+                                                    alt="{{ $cart->variant->product->name }}" />
                                             </div>
                                         </td>
                                         <td class="column-3">
@@ -76,9 +76,9 @@
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                             <div class="flex-w flex-m m-r-20 m-tb-5">
                                 <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-                                    name="coupon" placeholder="Coupon Code">
+                                    name="coupon" placeholder="Coupon Code" wire:model='code'>
 
-                                <div
+                                <div wire:click='applyCoupon()'
                                     class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
                                     Apply coupon
                                 </div>
@@ -107,7 +107,7 @@
 
                             <div class="size-209">
                                 <span class="mtext-110 cl2">
-                                    {{ $subTotal }}
+                                    {{ NumberFormat::VND($subTotal) }}
                                 </span>
                             </div>
                         </div>
@@ -121,10 +121,27 @@
 
                             <div class="size-209">
                                 <span class="mtext-110 cl2">
-                                    {{ $coupon->discount }}
+                                    - {{ NumberFormat::VND($discount) }}
                                 </span>
                             </div>
                         </div>
+
+                        @if ($coupon)
+                            <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                                <div class="size-208 w-full-ssm">
+                                    <span class="stext-110 cl2">
+                                        Coupon:
+                                    </span>
+                                </div>
+
+                                <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
+                                    <p class="stext-111 cl6 p-t-2">
+                                        {{ $coupon->code }} - {{ $coupon->desc }}
+                                    </p>
+
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="flex-w flex-t bor12 p-t-15 p-b-30">
                             <div class="size-208 w-full-ssm">
@@ -185,7 +202,7 @@
 
                             <div class="size-209 p-t-1">
                                 <span class="mtext-110 cl2">
-                                    $79.65
+                                    {{ NumberFormat::VND($total) }}
                                 </span>
                             </div>
                         </div>
@@ -209,3 +226,12 @@
         </div>
     </div>
 </form>
+
+
+@script
+    <script>
+        $wire.on('notification', data => {
+            swal('', data.message || 'Success!', data.type);
+        })
+    </script>
+@endscript
