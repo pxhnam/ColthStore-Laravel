@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\CouponType;
 use Exception;
 use Carbon\Carbon;
 use App\Models\Coupon;
@@ -56,6 +57,9 @@ class UpdateCoupon extends Component
     {
         $this->form->validate();
         try {
+            if ($this->form->type === CouponType::FIXED->value) {
+                $this->form->max = null;
+            }
             if ($this->form->id) {
                 $coupon = Coupon::findOrFail($this->form->id);
                 $coupon->code = $this->form->code;

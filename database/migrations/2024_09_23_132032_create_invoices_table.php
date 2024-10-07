@@ -19,7 +19,13 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+            $table->unsignedInteger('discount');
             $table->unsignedBigInteger('total');
+            $table->uuid('coupon_id')->nullable();;
+            $table->foreign('coupon_id')
+                ->references('id')
+                ->on('coupons')
+                ->onDelete('cascade');
             $table->string('note');
             $table->enum('state', InvoiceState::getValues())->default(InvoiceState::PENDING->value);
             $table->timestamps();

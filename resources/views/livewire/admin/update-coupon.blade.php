@@ -66,7 +66,8 @@
                     <div class="form-floating is-invalid">
                         <input type='number' id='Max' placeholder='Max' wire:model='form.max'
                             @if ($errors->has('form.max')) class='form-control is-invalid'
-                            @else class='form-control' @endif />
+                            @else class='form-control' @endif
+                            @disabled($form->type === CouponType::FIXED->value) />
                         <label for='Max'>Max</label>
                     </div>
                     @error('form.max')

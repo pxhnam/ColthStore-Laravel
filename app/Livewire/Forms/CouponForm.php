@@ -35,7 +35,7 @@ class CouponForm extends Form
             'type' => 'required|in:' . implode(',', CouponType::getValues()),
             'min' => 'required|integer|min:0',
             'max' => 'nullable|integer|gte:min',
-            'limit' => 'nullable|integer|min:0',
+            'limit' => 'nullable|integer|min:0|gte:count',
             'desc' => 'required|string',
             'start' => 'required|date_format:Y-m-d\TH:i|before_or_equal:expiry',
             'expiry' => 'nullable|date_format:Y-m-d\TH:i|after:start',

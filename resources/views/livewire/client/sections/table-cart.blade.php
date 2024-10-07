@@ -1,7 +1,7 @@
 @php
     use App\Helpers\NumberFormat;
 @endphp
-<form class="bg0 p-t-75 p-b-85">
+<form class="bg0 p-t-75 p-b-85" wire:submit.prevent='submit'>
     <div class="container">
         <div class="row">
             @if ($carts->count() > 0)
@@ -76,7 +76,8 @@
                         <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
                             <div class="flex-w flex-m m-r-20 m-tb-5">
                                 <input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text"
-                                    name="coupon" placeholder="Coupon Code" wire:model='code'>
+                                    name="coupon" placeholder="Coupon Code" wire:model='code'
+                                    wire:keydown.enter.prevent='applyCoupon()' />
 
                                 <div wire:click='applyCoupon()'
                                     class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
@@ -84,7 +85,7 @@
                                 </div>
                             </div>
 
-                            <div wire:click='check()'
+                            <div
                                 class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
                                 Update Cart
                             </div>
@@ -130,13 +131,17 @@
                             <div class="flex-w flex-t bor12 p-t-15 p-b-30">
                                 <div class="size-208 w-full-ssm">
                                     <span class="stext-110 cl2">
-                                        Coupon:
+                                        Promotion:
                                     </span>
                                 </div>
 
                                 <div class="size-209 p-r-18 p-r-0-sm w-full-ssm">
                                     <p class="stext-111 cl6 p-t-2">
                                         {{ $coupon->code }} - {{ $coupon->desc }}
+                                        [<a href='#' wire:click.prevent='removeCoupon()'
+                                            class="m-b-18 hov-cl1 trans-04">
+                                            Xóa
+                                        </a>]
                                     </p>
 
                                 </div>
@@ -165,7 +170,7 @@
 
                                     <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9" wire:ignore>
                                         <select class="js-select2" name="time">
-                                            <option>Select a country...</option>
+                                            <option value=''>Select a country...</option>
                                             <option>USA</option>
                                             <option>UK</option>
                                         </select>
@@ -173,13 +178,13 @@
                                     </div>
 
                                     <div class="bor8 bg0 m-b-12">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state"
-                                            placeholder="State /  country">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text"
+                                            name="state" placeholder="State /  country" wire:model='note.state'>
                                     </div>
 
                                     <div class="bor8 bg0 m-b-22">
                                         <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text"
-                                            name="postcode" placeholder="Postcode / Zip">
+                                            name="postcode" placeholder="Postcode / Zip" wire:model='note.zip'>
                                     </div>
 
                                     <div class="flex-w">
@@ -207,7 +212,8 @@
                             </div>
                         </div>
 
-                        <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        <button type='submit'
+                            class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
                             Proceed to Checkout
                         </button>
                     </div>
@@ -230,6 +236,9 @@
 
 @script
     <script>
+        $document.on('change', '.js-select2', function(e) {
+            @this.set('note.country', $(this).val());
+        });
         $wire.on('notification', data => {
             swal('', data.message || 'Success!', data.type);
         })

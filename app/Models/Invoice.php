@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
     use HasUuid, HasFactory;
+    protected $fillable = [
+        'user_id',
+        'discount',
+        'total',
+        'coupon_id',
+        'note'
+    ];
 }
