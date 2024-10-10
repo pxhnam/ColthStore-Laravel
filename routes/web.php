@@ -13,8 +13,10 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 
 Route::get('welcome', function () {
     return 'Hi!';
@@ -40,6 +42,7 @@ Route::get('', [HomeController::class, 'index'])->name('home');
 Route::post('add-to-cart', [CartController::class, 'add'])->name('add-to-cart');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+
 Route::prefix('products')
     ->name('products.')
     ->group(function () {
@@ -51,6 +54,7 @@ Route::prefix('products')
 Route::middleware('auth')
     ->group(function () {
         Route::get('carts', [CartController::class, 'index'])->name('carts');
+        Route::get('my-orders', [OrderController::class, 'index'])->name('orders');
     });
 
 
@@ -85,6 +89,7 @@ Route::prefix('admin')
                 Route::get('sizes', [SizeController::class, 'index'])->name('sizes');
                 Route::get('categories', [CategoryController::class, 'index'])->name('categories');
                 Route::get('products', [AdminProductController::class, 'index'])->name('products');
+                Route::get('orders', [AdminOrderController::class, 'index'])->name('orders');
                 Route::get('coupons', [CouponController::class, 'index'])->name('coupons');
                 Route::get('banners', [BannerController::class, 'index'])->name('banners');
             });

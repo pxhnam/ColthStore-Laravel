@@ -137,6 +137,7 @@ class ProductList extends Component
             ]
         ];
     }
+
     public function render()
     {
         return view('livewire.client.sections.product-list');

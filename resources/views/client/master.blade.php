@@ -45,6 +45,10 @@
 
     @stack('modals')
 
+    <form id="logout-form" action="{{ route('logout') }}" method='POST'>
+        @csrf
+    </form>
+
     <script src="{{ asset('assets/client/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/client/vendor/animsition/js/animsition.min.js') }}"></script>
     <script src="{{ asset('assets/client/vendor/bootstrap/js/popper.js') }}"></script>

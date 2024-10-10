@@ -25,6 +25,7 @@ class TableCart extends Component
     public $discount = 0;
     public $total = 0;
     public $code;
+    public $method;
     public $quantities = [];
     public $selected = [];
     public $isSelectAll = false;
@@ -216,6 +217,19 @@ class TableCart extends Component
     public function submit()
     {
         try {
+            if (empty($this->selected)) {
+                $this->notification('warning', 'Please select a product for your order!');
+                return;
+            }
+            if (empty($this->note)) {
+                $this->notification('warning', 'Please enter your shipping address!');
+                return;
+            }
+            if (empty($this->method)) {
+                $this->notification('warning', 'Please select a payment method!');
+                return;
+            }
+
             DB::beginTransaction();
             if (Auth::check()) {
                 $total = 0;

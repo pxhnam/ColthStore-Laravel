@@ -15,4 +15,14 @@ class InvoiceItem extends Model
         'cost',
         'num'
     ];
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class, 'variant_id');
+    }
 }

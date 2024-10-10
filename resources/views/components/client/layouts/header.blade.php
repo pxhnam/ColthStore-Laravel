@@ -97,17 +97,34 @@
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
 
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <button type="submit"
+                        {{-- <button type="submit"
                                 class="dis-block icon-header-profile-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                                 <i class="zmdi zmdi-account-circle"></i> <span>Hi, {{ Auth::user()->name }}</span>
                                 <span>
                                     <i class="zmdi zmdi-chevron-down"></i>
 
                                 </span>
-                            </button>
-                        </form>
+                            </button> --}}
+                        <ul class="main-menu">
+                            <li class="p-0">
+                                <a href='javascript:void(0)' class="header-profile-item">
+                                    <i class="zmdi zmdi-account-circle"></i> <span>Hi, {{ Auth::user()->name }}</span>
+                                    <span>
+                                        <i class="zmdi zmdi-chevron-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li><a href="{{ route('orders') }}">My Orders</a></li>
+                                    <li><a href=''>Homepage 2</a></li>
+                                    <li>
+                                        <a href='#'
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Logout
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                     @else
                         <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                             <i class="zmdi zmdi-shopping-cart"></i>

@@ -31,5 +31,6 @@ class DatabaseSeeder extends Seeder
         // $user->state = UserState::ACTIVED->value;
         // $user->email_verified_at = now();
         // $user->save();
+
     }
 }

@@ -14831,7 +14831,13 @@ iframe {
 .txt-left {
     text-align: left;
 }
+.txt-start {
+    text-align: left;
+}
 .txt-right {
+    text-align: right;
+}
+.txt-end {
     text-align: right;
 }
 .txt-middle {

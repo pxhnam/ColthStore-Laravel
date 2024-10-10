@@ -11,6 +11,7 @@ use App\Livewire\Components\AdminComponent;
 
 class TableSize extends AdminComponent
 {
+    protected $validSortByColumns = ['name', 'created_at', 'updated_at'];
 
     public function create()
     {
@@ -39,9 +40,12 @@ class TableSize extends AdminComponent
             ->where(function ($query) {
                 $query->where('name', 'like', "%{$this->search}%");
             })
-            ->when($this->sortBy, function ($query) {
-                $query->orderBy($this->sortBy, $this->sortDirection);
-            })
+            ->when(
+                $this->sortBy,
+                function ($query) {
+                    $query->orderBy($this->sortBy, $this->sortDirection);
+                }
+            )
             ->paginate($this->pageSize);
         return view(
             'livewire.admin.table-size',

@@ -90,7 +90,7 @@
                         </button>
                     </div>
                     @for ($index = 0; $index < $count; $index++)
-                        <div
+                        <div wire:key='{{ $index }}'
                             class='d-block d-lg-flex justify-content-between align-items-center border rounded p-3 my-2'>
                             <div class="col-md-12 col-lg-2 mb-3 mb-lg-0">
                                 <div class="form-floating">

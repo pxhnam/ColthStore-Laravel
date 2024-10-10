@@ -9,6 +9,8 @@ use App\Models\Category;
 class TableCategory extends AdminComponent
 {
 
+    protected $validSortByColumns = ['name', 'slug', 'desc', 'created_at', 'updated_at'];
+
     public function create()
     {
         $this->dispatch('create-category');

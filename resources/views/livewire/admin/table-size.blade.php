@@ -23,9 +23,9 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col" wire:click='sort("Name")'>
+                <th scope="col" wire:click='sort("name")'>
                     Name
-                    @if ($sortBy == 'Name')
+                    @if (strtolower($sortBy) == 'name')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -35,7 +35,7 @@
                 </th>
                 <th scope="col" wire:click='sort("updated_at")'>
                     Updated At
-                    @if ($sortBy == 'updated_at')
+                    @if (strtolower($sortBy) == 'updated_at')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -45,7 +45,7 @@
                 </th>
                 <th scope="col" wire:click='sort("created_at")'>
                     Created At
-                    @if ($sortBy == 'created_at')
+                    @if (strtolower($sortBy) == 'created_at')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else

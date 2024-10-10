@@ -81,6 +81,7 @@
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $coupon->code }}</td>
+
                         <td>
                             @switch($coupon->type)
                                 @case(CouponType::FIXED->value)

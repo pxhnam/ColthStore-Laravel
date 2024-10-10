@@ -10,6 +10,7 @@ use App\Livewire\Components\AdminComponent;
 
 class TableColor extends AdminComponent
 {
+    protected $validSortByColumns = ['name', 'created_at', 'updated_at'];
 
     public function create()
     {

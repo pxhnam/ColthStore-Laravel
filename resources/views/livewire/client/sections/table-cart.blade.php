@@ -85,10 +85,10 @@
                                 </div>
                             </div>
 
-                            <div
-                                class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                                Update Cart
-                            </div>
+                            {{-- <div
+                                    class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+                                    Update Cart
+                                </div> --}}
                         </div>
                     </div>
                 </div>
@@ -187,13 +187,42 @@
                                             name="postcode" placeholder="Postcode / Zip" wire:model='note.zip'>
                                     </div>
 
-                                    <div class="flex-w">
+                                    {{-- <div class="flex-w">
                                         <div
                                             class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
                                             Update Totals
                                         </div>
-                                    </div>
+                                    </div> --}}
 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex-w flex-t bor12 p-t-15 p-b-30">
+                            <div class="w-full-ssm">
+                                <p class="stext-110 cl2 m-b-15">
+                                    Payment method:
+                                </p>
+                                <div class="form-check m-l-20">
+                                    <input class="form-check-input" type="radio" wire:model='method'
+                                        name="method" id="pay-cod" value="cod" />
+                                    <label class="form-check-label" for="pay-cod">
+                                        Cash on delivery
+                                    </label>
+                                </div>
+                                <div class="form-check m-l-20">
+                                    <input class="form-check-input" type="radio" wire:model='method'
+                                        name="method" id="pay-momo" value="momo" />
+                                    <label class="form-check-label" for="pay-momo">
+                                        Pay with Momo e-wallet
+                                    </label>
+                                </div>
+                                <div class="form-check m-l-20">
+                                    <input class="form-check-input" type="radio" wire:model='method'
+                                        name="method" id="pay-vnpay" value="vnpay" />
+                                    <label class="form-check-label" for="pay-vnpay">
+                                        Pay with VNPay e-wallet
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -241,6 +270,6 @@
         });
         $wire.on('notification', data => {
             swal('', data.message || 'Success!', data.type);
-        })
+        });
     </script>
 @endscript

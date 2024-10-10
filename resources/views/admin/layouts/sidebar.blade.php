@@ -81,11 +81,11 @@
             <span class="tooltip">Files</span>
         </li>
         <li>
-            <a href="#">
+            <a href="{{ route('admin.orders') }}" wire:navigate>
                 <i class='bx bx-cart-alt'></i>
-                <span class="links_name">Order</span>
+                <span class="links_name">Orders</span>
             </a>
-            <span class="tooltip">Order</span>
+            <span class="tooltip">Orders</span>
         </li>
         <li>
             <a href="#">

@@ -51,9 +51,9 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col" wire:click='sort("Name")'>
+                <th scope="col" wire:click='sort("name")'>
                     Name
-                    @if ($sortBy == 'Name')
+                    @if (strtolower($sortBy) == 'name')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -61,9 +61,9 @@
                         @endif
                     @endif
                 </th>
-                <th scope="col" wire:click='sort("Email")'>
+                <th scope="col" wire:click='sort("email")'>
                     Email
-                    @if ($sortBy == 'Email')
+                    @if (strtolower($sortBy) == 'email')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -75,7 +75,7 @@
                 <th scope="col">State</th>
                 <th scope="col" wire:click='sort("email_verified_at")'>
                     Email Verified At
-                    @if ($sortBy == 'email_verified_at')
+                    @if (strtolower($sortBy) == 'email_verified_at')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -85,7 +85,7 @@
                 </th>
                 <th scope="col" wire:click='sort("updated_at")'>
                     Updated At
-                    @if ($sortBy == 'updated_at')
+                    @if (strtolower($sortBy) == 'updated_at')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -95,7 +95,7 @@
                 </th>
                 <th scope="col" wire:click='sort("created_at")'>
                     Created At
-                    @if ($sortBy == 'created_at')
+                    @if (strtolower($sortBy) == 'created_at')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else

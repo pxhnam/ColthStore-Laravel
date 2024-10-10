@@ -1,3 +1,7 @@
+@php
+    use App\Helpers\NumberFormat;
+    use App\Enums\InvoiceState;
+@endphp
 <div class="row table-responsive shadow-sm p-3 bg-body-tertiary rounded">
     <div class="col-12 col-md-1">
         <div class="form-floating">
@@ -33,10 +37,9 @@
                         @endif
                     @endif
                 </th>
-                <th scope="col">Picture</th>
-                <th scope="col" wire:click='sort("updated_at")'>
-                    Updated At
-                    @if (strtolower($sortBy) == 'updated_at')
+                <th scope="col" wire:click='sort("discount")'>
+                    Discount
+                    @if (strtolower($sortBy) == 'discount')
                         @if ($sortDirection === 'asc')
                             <i class='bx bxs-chevron-up'></i>
                         @else
@@ -44,6 +47,17 @@
                         @endif
                     @endif
                 </th>
+                <th scope="col" wire:click='sort("total")'>
+                    Total
+                    @if (strtolower($sortBy) == 'total')
+                        @if ($sortDirection === 'asc')
+                            <i class='bx bxs-chevron-up'></i>
+                        @else
+                            <i class='bx bxs-chevron-down'></i>
+                        @endif
+                    @endif
+                </th>
+                <th scope="col">State</th>
                 <th scope="col" wire:click='sort("created_at")'>
                     Created At
                     @if (strtolower($sortBy) == 'created_at')
@@ -58,24 +72,37 @@
             </tr>
         </thead>
         <div class="col-12">
-            <tbody wire:loading.remove wire:target='colors'>
-                @forelse ($colors ?? [] as $color)
+            <tbody wire:loading.remove wire:target='orders'>
+                @forelse ($orders ?? [] as $order)
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $color->name }}</td>
+                        <td>{{ $order->user->name }}</td>
+                        <td>{{ NumberFormat::VND($order->discount) }}</td>
+                        <td>{{ NumberFormat::VND($order->total) }}</td>
                         <td>
-                            <img src="{{ asset('storage/' . $color->pic) }}" alt="{{ $color->name }}"
-                                class="rounded-circle" width="50px" height="50px"
-                                onerror="this.onerror=null; this.src='{{ asset('storage/uploads/Image-Not-Found.jpg') }}';">
+                            @php
+                                $badgeClass = match ($order->state) {
+                                    InvoiceState::PENDING->value => 'text-bg-secondary',
+                                    InvoiceState::CONFIRMED->value => 'text-bg-primary',
+                                    InvoiceState::PAID->value => 'text-bg-success',
+                                    InvoiceState::CANCELED->value => 'text-bg-danger',
+                                    default => 'text-bg-light',
+                                };
+                            @endphp
+                            <div class="d-flex justify-content-center align-items-center gap-3">
+                                <a href="#" wire:click.prevent="previous('{{ $order->id }}')">
+                                    <i class='bx bxs-chevron-left'></i>
+                                </a>
+                                <span class="badge {{ $badgeClass }}">{{ $order->state }}</span>
+                                <a href="#" wire:click.prevent="next('{{ $order->id }}')">
+                                    <i class='bx bxs-chevron-right'></i>
+                                </a>
+                            </div>
                         </td>
-                        <td>{{ $color->updated_at }}</td>
-                        <td>{{ $color->created_at }}</td>
+                        <td>{{ $order->created_at }}</td>
                         <td>
-                            <button class="btn btn-success" wire:click='update("{{ $color->id }}")'>
-                                <i class='bx bxs-edit-alt'></i>
-                            </button>
-                            <button class="btn btn-danger" @click="$dispatch('delete', { id: '{{ $color->id }}' })">
-                                <i class='bx bxs-trash-alt'></i>
+                            <button class="btn btn-success" wire:click="show('{{ $order->id }}')">
+                                <i class='bx bx-show'></i>
                             </button>
                         </td>
                     </tr>
@@ -87,35 +114,6 @@
             </tbody>
         </div>
     </table>
-    <p class="text-center" wire:loading wire:target='colors'>LOADING...</p>
-    {{ $colors->links() }}
+    <p class="text-center" wire:loading wire:target='orders'>LOADING...</p>
+    {{ $orders->links() }}
 </div>
-
-@script
-    <script>
-        $wire.on('delete', (event) => {
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#d33",
-                cancelButtonColor: "#3085d6",
-                confirmButtonText: "Yes, delete it!"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $wire.dispatch('destroy', {
-                        id: event.id
-                    });
-                    Swal.fire({
-                        icon: "success",
-                        title: "Deleted!",
-                        text: "Your file has been deleted.",
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                }
-            });
-        });
-    </script>
-@endscript

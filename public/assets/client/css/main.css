@@ -491,6 +491,17 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     font-size: 15px;
 }
 
+.header-profile-item {
+    font-size: 15px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+.header-profile-item > i:first-child {
+    font-size: 26px;
+}
 /*---------------------------------------------*/
 .icon-header-noti::after {
     content: attr(data-notify);
