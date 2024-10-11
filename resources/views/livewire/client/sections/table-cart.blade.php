@@ -85,10 +85,6 @@
                                 </div>
                             </div>
 
-                            {{-- <div
-                                    class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                                    Update Cart
-                                </div> --}}
                         </div>
                     </div>
                 </div>
@@ -165,35 +161,62 @@
 
                                 <div class="p-t-15">
                                     <span class="stext-112 cl8">
-                                        Calculate Shipping
+                                        Contact
+                                    </span>
+                                    <div class="bor8 bg0 m-b-22">
+                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="number"
+                                            name="postcode" placeholder="Phone number" wire:model='note.number' />
+                                    </div>
+
+                                    <span class="stext-112 cl8">
+                                        Shipping address
                                     </span>
 
-                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9" wire:ignore>
-                                        <select class="js-select2" name="time">
-                                            <option value=''>Select a country...</option>
-                                            <option>USA</option>
-                                            <option>UK</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
+                                    <div class="bor8 bg0 m-b-12 m-t-9 box-input-list">
+                                        <input class="stext-111 cl8 plh3 size-111" type="text" name="city"
+                                            placeholder="Select city" id="input-city" wire:model='note.city' />
+                                        <ul class="result-list" wire:ignore>
+                                            @foreach ($cities as $city)
+                                                <li wire:key='{{ $city->id }}'>
+                                                    {{ $city->name }}
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
 
-                                    <div class="bor8 bg0 m-b-12">
-                                        <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text"
-                                            name="state" placeholder="State /  country" wire:model='note.state'>
-                                    </div>
+                                    @if (!empty($districts))
+                                        <div class="bor8 bg0 m-b-12 m-t-9 box-input-list">
+                                            <input class="stext-111 cl8 plh3 size-111" type="text" name="district"
+                                                placeholder="Select district" id="input-district"
+                                                wire:model='note.district' />
+                                            <ul class="result-list" wire:ignore>
+                                                @foreach ($districts as $district)
+                                                    <li wire:key='{{ $district->id }}'>
+                                                        {{ $district->name }}
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
 
+                                        @if (!empty($wards))
+                                            <div class="bor8 bg0 m-b-12 m-t-9 box-input-list">
+                                                <input class="stext-111 cl8 plh3 size-111" type="text"
+                                                    name="ward" placeholder="Select ward" id="input-ward"
+                                                    wire:model='note.ward' />
+                                                <ul class="result-list" wire:ignore>
+                                                    @foreach ($wards as $ward)
+                                                        <li wire:key='{{ $ward->id }}'>
+                                                            {{ $ward->name }}
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                    @endif
                                     <div class="bor8 bg0 m-b-22">
                                         <input class="stext-111 cl8 plh3 size-111 p-lr-15" type="text"
-                                            name="postcode" placeholder="Postcode / Zip" wire:model='note.zip'>
+                                            name="other" placeholder="Other" wire:model='note.other' />
                                     </div>
-
-                                    {{-- <div class="flex-w">
-                                        <div
-                                            class="flex-c-m stext-101 cl2 size-115 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer">
-                                            Update Totals
-                                        </div>
-                                    </div> --}}
-
                                 </div>
                             </div>
                         </div>
@@ -265,11 +288,89 @@
 
 @script
     <script>
-        $document.on('change', '.js-select2', function(e) {
-            @this.set('note.country', $(this).val());
+        cities = [];
+        districts = [];
+        wards = [];
+
+        $document.on('click', function(event) {
+            if (!$(event.target).closest('.box-input-list').length) {
+                $('.result-list').hide();
+            }
         });
+
+        $document.on('click', '.box-input-list', function(event) {
+            if ($(event.target).is('input')) {
+                $('.result-list').hide();
+                $(this).find('.result-list').show();
+                return;
+            }
+            $(this).find('.result-list').toggle();
+        });
+
+        $document.on('click', '.result-list li', function() {
+            const selected = $(this).text();
+            const input = $(this).closest('.box-input-list').find('input');
+            input.val(selected.trim());
+            $(this).siblings('li').removeClass('active');
+            $(this).addClass('active');
+            input.trigger('change');
+        });
+
+        $document.on('input', '#input-city', function() {
+            updateResultList(this, cities);
+        });
+
+        $document.on('input', '#input-district', function() {
+            updateResultList(this, districts);
+        });
+
+        $document.on('input', '#input-ward', function() {
+            updateResultList(this, wards);
+        });
+
+        $document.on('change', '#input-city, #input-district, #input-ward', function() {
+            const value = $(this).val();
+            const name = $(this).attr('name');
+            @this.set('note.' + name, value);
+            if (name === 'city') {
+                $wire.dispatch('update-districts');
+            } else if (name === 'district') {
+                $wire.dispatch('update-wards');
+            }
+        });
+
+        $wire.on('cities', data => {
+            cities = data.cities;
+        });
+
+        $wire.on('load-districts', data => {
+            districts = data.districts;
+            loadResultList('#input-district', districts);
+        });
+
+        $wire.on('load-wards', data => {
+            wards = data.wards;
+            loadResultList('#input-ward', wards);
+        });
+
+        function updateResultList(inputElement, data) {
+            const inputVal = $(inputElement).val().toLowerCase().trim();
+            const filteredResults = inputVal ? data.filter(item => item.name.toLowerCase().includes(inputVal)) : data;
+            loadResultList(inputElement, filteredResults);
+        }
+
+        function loadResultList(inputElement, data) {
+            const resultList = $(inputElement).closest('.box-input-list').find('.result-list');
+
+            resultList.empty();
+
+            data.forEach(item => {
+                resultList.append(`<li wire:key='${item.id}'>${item.name}</li>`);
+            });
+        }
+
         $wire.on('notification', data => {
-            swal('', data.message || 'Success!', data.type);
+            swal('', data.message || '', data.type);
         });
     </script>
 @endscript

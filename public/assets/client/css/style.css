@@ -1,10 +1,22 @@
 body {
-    font-family: "Poppins-Regular";
+    font-family: Poppins;
 }
+
 a {
-    font-family: Poppins-Medium;
+    font-family: Poppins-Regular;
     color: #717fe0;
 }
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 nav .link-login {
     font-size: 14px;
     color: #333;
@@ -152,4 +164,47 @@ nav .link-login {
 
 .btn i {
     font-size: 21px;
+}
+.box-input-list input {
+    font-family: Poppins;
+    padding-left: 15px;
+}
+.box-input-list {
+    position: relative;
+    padding-right: 30px;
+    user-select: none;
+}
+.box-input-list::after {
+    content: "\f0d7";
+    font-family: FontAwesome;
+    font-size: 13px;
+    color: #808080;
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translate(50%, -50%);
+    pointer-events: none;
+}
+.box-input-list .result-list {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    font-size: 13px;
+    overflow: scroll;
+    display: none;
+    z-index: 10;
+}
+.box-input-list .result-list li {
+    padding: 10px;
+    cursor: pointer;
+}
+.box-input-list .result-list li:hover {
+    background-color: #717fe0;
+    color: #fff;
+}
+.box-input-list .result-list li.active {
+    background-color: #717fe0;
+    color: #fff;
 }

@@ -2,7 +2,7 @@
     use App\Helpers\NumberFormat;
 @endphp
 <div class="container">
-    <div class="flex-w justify-content-center m-t-30 m-b-75" style="min-height: 680px">
+    <div class="table-responsive flex-w justify-content-center m-t-30 m-b-75" style="min-height: 680px">
         <table class="table-custom">
             <thead>
                 <tr>

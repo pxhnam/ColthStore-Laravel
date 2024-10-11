@@ -102,7 +102,8 @@
                         <td>{{ $order->created_at }}</td>
                         <td>
                             <button class="btn btn-success" wire:click="show('{{ $order->id }}')">
-                                <i class='bx bx-show'></i>
+                                {{-- <i class='bx bx-show'></i> --}}
+                                <i class='bx bx-info-circle'></i>
                             </button>
                         </td>
                     </tr>

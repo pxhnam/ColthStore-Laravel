@@ -38,6 +38,10 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 [ FONT ]*/
 
 @font-face {
+    font-family: Poppins;
+    src: url("../fonts/Poppins/Poppins.ttf");
+}
+@font-face {
     font-family: Poppins-Regular;
     src: url("../fonts/Poppins/Poppins-Regular.ttf");
 }
@@ -65,6 +69,11 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 @font-face {
     font-family: Poppins-Bold;
     src: url("../fonts/Poppins/Poppins-Bold.ttf");
+}
+
+@font-face {
+    font-family: Poppins-ExtraBold;
+    src: url("../fonts/Poppins/Poppins-ExtraBold.ttf");
 }
 
 @font-face {
@@ -411,6 +420,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .main-menu > li > .sub-menu {
     top: 100%;
     left: 0;
+    z-index: 10;
 }
 
 .sub-menu a {
@@ -474,24 +484,15 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .icon-header-item,
-.icon-header-profile-item {
+.header-profile-item {
     position: relative;
     font-size: 26px;
     line-height: 1;
     cursor: pointer;
 }
-.icon-header-profile-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-}
-.icon-header-profile-item span {
-    font-family: Poppins;
-    font-size: 15px;
-}
 
 .header-profile-item {
+    font-family: Poppins;
     font-size: 15px !important;
     display: flex;
     justify-content: center;
@@ -1104,7 +1105,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
     .select2-container
     .select2-selection--single
     .select2-selection__rendered {
-    font-family: Poppins-Regular;
+    font-family: Poppins;
     font-size: 13px;
     color: #555;
     line-height: 1.2;
@@ -1199,7 +1200,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 }
 
 .rs1-select2 .select2-results__options {
-    font-family: Poppins-Regular;
+    font-family: Poppins;
     font-size: 13px;
     color: #555;
     line-height: 1.2;
@@ -1208,7 +1209,7 @@ Input, textarea : 14px/1.6 '', Arial, sans-serif;
 .rs1-select2 .select2-search--dropdown .select2-search__field {
     border: 1px solid #aaa;
     outline: none;
-    font-family: Poppins-Regular;
+    font-family: Poppins;
     font-size: 13px;
     color: #555;
     line-height: 1.2;
@@ -2025,7 +2026,7 @@ input.num-product::-webkit-inner-spin-button {
     font-size: 15px;
 }
 .table-shopping-cart .column-3 a {
-    color: #555;
+    color: #333;
     transition: all 0.3s ease;
 }
 .table-shopping-cart .column-3 a:hover {

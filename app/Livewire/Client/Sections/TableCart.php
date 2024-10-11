@@ -8,13 +8,15 @@ use App\Models\Coupon;
 use App\Models\Invoice;
 use Livewire\Component;
 use App\Enums\CouponType;
+use App\Enums\LocationLevel;
 use App\Enums\ProductState;
 use App\Models\InvoiceItem;
+use App\Models\Location;
 use Livewire\Attributes\On;
-use App\Helpers\NumberFormat;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class TableCart extends Component
 {
@@ -29,6 +31,10 @@ class TableCart extends Component
     public $quantities = [];
     public $selected = [];
     public $isSelectAll = false;
+    public $cities = [];
+    public $districts = [];
+    public $wards = [];
+
 
     public function init()
     {
@@ -43,6 +49,11 @@ class TableCart extends Component
                 foreach ($this->carts as $cart) {
                     $this->quantities[$cart->id] = $cart->num;
                 }
+
+                $this->cities = Location::select('id', 'name')
+                    ->where('level', LocationLevel::CITY->value)
+                    ->get();
+                $this->dispatch('cities', cities: $this->cities);
             }
         } catch (Exception $ex) {
             Log::error($ex->getMessage());
@@ -54,6 +65,62 @@ class TableCart extends Component
     {
         $this->init();
         $this->update();
+    }
+
+    #[On('update-districts')]
+    public function updateDistricts()
+    {
+        try {
+            $cityName = trim($this->note['city'] ?? '');
+            if ($cityName) {
+                $cityId = Location::where('name', $cityName)
+                    ->where('level', LocationLevel::CITY->value)
+                    ->value('id');
+
+                $this->districts = $cityId ? Location::select('id', 'name')
+                    ->where('parent_id', $cityId)
+                    ->where('level', LocationLevel::DISTRICT->value)
+                    ->get() : [];
+            } else {
+                $this->districts = [];
+            }
+            $this->wards = [];
+            $this->note['district'] = '';
+            $this->note['ward'] = '';
+            $this->dispatch('load-districts', districts: $this->districts);
+        } catch (Exception $ex) {
+            Log::error($ex->getMessage());
+        }
+    }
+
+    #[On('update-wards')]
+    public function updateWards()
+    {
+        try {
+            $cityName = trim($this->note['city'] ?? '');
+            $districtName = isset($this->note['district']) ? trim($this->note['district']) : '';
+            if ($cityName && $districtName) {
+                $cityId = Location::where('name', $cityName)
+                    ->where('level', LocationLevel::CITY->value)
+                    ->value('id');
+
+                $districtId = $cityId ? Location::where('name', $districtName)
+                    ->where('parent_id', $cityId)
+                    ->where('level', LocationLevel::DISTRICT->value)
+                    ->value('id') : null;
+
+                $this->wards = $districtId ? Location::select('id', 'name')
+                    ->where('parent_id', $districtId)
+                    ->where('level', LocationLevel::WARD->value)
+                    ->get() : [];
+            } else {
+                $this->wards = [];
+            }
+            $this->note['ward'] = '';
+            $this->dispatch('load-wards', wards: $this->wards);
+        } catch (Exception $ex) {
+            Log::error($ex->getMessage());
+        }
     }
 
     public function change($id)
@@ -209,25 +276,83 @@ class TableCart extends Component
         $this->update();
     }
 
-    public function goHome()
-    {
-        return redirect()->route('home');
-    }
-
     public function submit()
     {
         try {
-            if (empty($this->selected)) {
-                $this->notification('warning', 'Please select a product for your order!');
-                return;
-            }
-            if (empty($this->note)) {
-                $this->notification('warning', 'Please enter your shipping address!');
-                return;
-            }
-            if (empty($this->method)) {
-                $this->notification('warning', 'Please select a payment method!');
-                return;
+            $number = $this->note['number'] ?? '';
+            $city = $this->note['city'] ?? '';
+            $district = $this->note['district'] ?? '';
+            $ward = $this->note['ward'] ?? '';
+            $other = $this->note['other'] ?? '';
+            $validator = Validator::make(
+                [
+                    'selected' => $this->selected,
+                    'number' => $number,
+                    'city' => $city,
+                    'district' => $district,
+                    'ward' => $ward,
+                    'other' => $other,
+                    'method' => $this->method
+                ],
+                [
+                    'selected' => 'required|array|min:1',
+                    'number' => 'required|numeric|digits:10',
+                    'city' => [
+                        'required',
+                        'string',
+                        'exists:locations,name,level,' . LocationLevel::CITY->value
+                    ],
+                    'district' => [
+                        'required',
+                        'string',
+                        function ($attribute, $value, $fail) use ($city) {
+                            $cityId = Location::where('name', $city)
+                                ->where('level', LocationLevel::CITY->value)
+                                ->value('id');
+                            if (!Location::where('name', $value)
+                                ->where('parent_id', $cityId)
+                                ->where('level', LocationLevel::DISTRICT->value)
+                                ->exists()) {
+                                $fail('The selected district is invalid.');
+                            }
+                        }
+                    ],
+                    'ward' => [
+                        'required',
+                        'string',
+                        function ($attribute, $value, $fail) use ($district) {
+                            $districtId = Location::where('name', $district)
+                                ->where('level', LocationLevel::DISTRICT->value)
+                                ->value('id');
+                            if (!Location::where('name', $value)
+                                ->where('parent_id', $districtId)
+                                ->where('level', LocationLevel::WARD->value)
+                                ->exists()) {
+                                $fail('The selected ward is invalid.');
+                            }
+                        }
+                    ],
+                    'other' => 'required|string',
+                    'method' => 'required|string'
+                ],
+                [
+                    'selected.required' => 'Please select a product for your order!',
+                    'number.required' => 'Please enter your phone number!',
+                    'number.numeric' => 'The phone number must be numeric!',
+                    'number.digits' => 'The phone number must be exactly 10 digits!',
+                    'city.required' => 'Please select your city!',
+                    'district.required' => 'Please select your district!',
+                    'ward.required' => 'Please select your ward!',
+                    'other.required' => 'Please enter additional address details (e.g. street, building)!',
+                    'method.required' => 'Please select a payment method!'
+                ]
+            );
+
+            if ($validator->fails()) {
+                foreach ($validator->errors()->all() as $error) {
+                    $this->notification('warning', $error);
+                    return;
+                }
             }
 
             DB::beginTransaction();
@@ -289,6 +414,11 @@ class TableCart extends Component
             Log::error($ex->getMessage());
             $this->notification('error', 'Something went wrong!');
         }
+    }
+
+    public function goHome()
+    {
+        return redirect()->route('home');
     }
 
     public function notification($type, $message)

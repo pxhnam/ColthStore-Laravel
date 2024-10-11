@@ -97,14 +97,6 @@
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
 
-                        {{-- <button type="submit"
-                                class="dis-block icon-header-profile-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                                <i class="zmdi zmdi-account-circle"></i> <span>Hi, {{ Auth::user()->name }}</span>
-                                <span>
-                                    <i class="zmdi zmdi-chevron-down"></i>
-
-                                </span>
-                            </button> --}}
                         <ul class="main-menu">
                             <li class="p-0">
                                 <a href='javascript:void(0)' class="header-profile-item">
@@ -133,10 +125,15 @@
                         <a href="javascript:void(0)" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                             <i class="zmdi zmdi-favorite-outline"></i>
                         </a>
-                        <a class="link-login hov-cl1" href="{{ route('login') }}">
-                            Login Now
-                            <i class="zmdi zmdi-long-arrow-right"></i>
-                        </a>
+
+                        <ul class="main-menu">
+                            <li class="p-0">
+                                <a href="{{ route('login') }}">
+                                    Login Now
+                                    <i class="zmdi zmdi-chevron-right p-l-5"></i>
+                                </a>
+                            </li>
+                        </ul>
                     @endauth
                 </div>
             </nav>
@@ -164,16 +161,27 @@
                     class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="dis-block icon-header-profile-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
-                        <i class="zmdi zmdi-account-circle"></i> <span>Hi, {{ Auth::user()->name }}</span>
-                        <span>
-                            <i class="zmdi zmdi-chevron-down"></i>
 
-                        </span>
-                    </button>
-                </form>
+                <ul class="main-menu">
+                    <li class="p-0">
+                        <a href='javascript:void(0)' class="header-profile-item">
+                            <i class="zmdi zmdi-account-circle"></i> <span>Hi, {{ Auth::user()->name }}</span>
+                            <span>
+                                <i class="zmdi zmdi-chevron-down"></i>
+                            </span>
+                        </a>
+                        <ul class="sub-menu">
+                            <li><a href="{{ route('orders') }}">My Orders</a></li>
+                            <li><a href=''>Homepage 2</a></li>
+                            <li>
+                                <a href='#'
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             @else
                 <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                     <i class="zmdi zmdi-shopping-cart"></i>
@@ -182,10 +190,14 @@
                 <a href='javascript:void(0)' class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11">
                     <i class="zmdi zmdi-favorite-outline"></i>
                 </a>
-                <a class="link-login hov-cl1" href="{{ route('login') }}">
-                    Login Now
-                    <i class="zmdi zmdi-long-arrow-right"></i>
-                </a>
+                <ul class="main-menu">
+                    <li class="p-0">
+                        <a href="{{ route('login') }}">
+                            Login Now
+                            <i class="zmdi zmdi-chevron-right p-l-5"></i>
+                        </a>
+                    </li>
+                </ul>
             @endauth
         </div>
 

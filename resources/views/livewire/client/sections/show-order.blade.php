@@ -95,7 +95,7 @@
 @script
     <script>
         $wire.on('notification', data => {
-            swal('', data.message || 'Success!', data.type);
+            swal('', data.message || '', data.type);
         });
     </script>
 @endscript
