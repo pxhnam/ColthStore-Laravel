@@ -23,6 +23,7 @@ class TableUser extends AdminComponent
 
     public function mount()
     {
+        parent::mount();
         $this->roles = Role::all();
     }
 

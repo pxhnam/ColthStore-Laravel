@@ -56,7 +56,7 @@ class ShowProduct extends Component
                 $variant = ProductVariant::where('product_id', $this->product->id)
                     ->where('color_id', $this->color)
                     ->where('size_id', $this->size)->first();
-                if ($variant && $variant->product->state === ProductState::SHOW->value) {
+                if ($variant and $variant->product->state === ProductState::SHOW->value) {
                     if (Auth::check()) {
                         $userId = Auth::user()->id;
                         $cart = Cart::where('user_id', $userId)

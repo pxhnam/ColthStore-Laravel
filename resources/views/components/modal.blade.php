@@ -40,7 +40,7 @@
             <div class="modal-body">
                 {{ $slot }}
             </div>
-            @if ($btnClose || $btnDone)
+            @if ($btnClose or $btnDone)
                 <div class="modal-footer">
                     @if ($btnClose)
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click='close()'>

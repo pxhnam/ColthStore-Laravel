@@ -135,7 +135,7 @@ class UpdateProduct extends Component
         DB::beginTransaction();
         try {
             $paths = [];
-            if ($this->product->pics && is_array($this->product->pics)) {
+            if ($this->product->pics and is_array($this->product->pics)) {
                 foreach ($this->product->pics as $pic) {
                     if ($pic instanceof UploadedFile) {
                         $paths[] = $pic->store('uploads', 'public');

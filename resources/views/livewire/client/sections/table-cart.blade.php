@@ -184,7 +184,7 @@
                                         </ul>
                                     </div>
 
-                                    @if (!empty($districts))
+                                    @if (count($districts) != 0)
                                         <div class="bor8 bg0 m-b-12 m-t-9 box-input-list">
                                             <input class="stext-111 cl8 plh3 size-111" type="text" name="district"
                                                 placeholder="Select district" id="input-district"
@@ -198,7 +198,7 @@
                                             </ul>
                                         </div>
 
-                                        @if (!empty($wards))
+                                        @if (count($wards) != 0)
                                             <div class="bor8 bg0 m-b-12 m-t-9 box-input-list">
                                                 <input class="stext-111 cl8 plh3 size-111" type="text"
                                                     name="ward" placeholder="Select ward" id="input-ward"

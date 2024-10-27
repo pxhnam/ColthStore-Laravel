@@ -119,7 +119,8 @@
                 dropdownParent: $(this).next('.dropDownSelect2')
             });
         });
-        $(".btn-num-product-down").on("click", function() {
+
+        $('.btn-num-product-down').on('click', function() {
             var numProduct = Number($(this).next().val());
             if (numProduct > 0)
                 $(this)
@@ -127,7 +128,7 @@
                 .val(numProduct - 1);
         });
 
-        $(".btn-num-product-up").on("click", function() {
+        $('.btn-num-product-up').on('click', function() {
             var numProduct = Number($(this).prev().val());
             $(this)
                 .prev()
@@ -135,8 +136,8 @@
         });
         $document.on('click', '.js-show-modal1', function(e) {
             e.preventDefault();
-            var id = $(this).data('id');
-            var url = "{{ route('products.get', ['id' => ':id']) }}".replace(':id', id);
+            const id = $(this).data('id');
+            const url = "{{ route('products.get', ['id' => ':id']) }}".replace(':id', id);
             $.get(url)
                 .done(response => {
                     $('.modal-product-img').slick('unslick');
@@ -148,29 +149,36 @@
                     $('.modal-product-desc').text(response.data.desc);
                     $('#num-product').val(1);
                     $('.js-addcart-detail').data('id', response.data.id);
+                    let imagesPreviewContent = '';
                     $.each(response.data.images, function(index, image) {
-                        $('.modal-product-img').append(
-                            imagesPreview(response.data.name, image.path)
-                        );
+                        imagesPreviewContent += imagesPreview(response.data.name, image.path)
                     });
+                    $('.modal-product-img').append(imagesPreviewContent);
                     customSlick();
+
                     $('#select-color').empty();
                     $('#select-color').append('<option value="">Choose an option</option>');
+                    let colorsContent = '';
                     $.each(response.data.colors,
                         function(index, color) {
-                            $('#select-color').append(`<option value='${color.id}'>${color.name}</option>`);
+                            colorsContent += `<option value='${color.id}'>${color.name}</option>`;
                         });
+                    $('#select-color').append(colorsContent);
+
                     $('#select-size').empty();
                     $('#select-size').append('<option value="">Choose an option</option>');
+                    let sizesContent = '';
                     $.each(response.data.sizes,
                         function(index, size) {
-                            $('#select-size').append(`<option value='${size.id}'>${size.name}</option>`);
+                            sizesContent += `<option value='${size.id}'>${size.name}</option>`;
                         });
+                    $('#select-size').append(sizesContent);
                 })
                 .fail(response => {
                     swal('ERROR!', 'Try again !', 'error');
                 });
         });
+
         $document.on('click', '.js-addcart-detail', function() {
             $.post({
                 url: "{{ route('add-to-cart') }}",

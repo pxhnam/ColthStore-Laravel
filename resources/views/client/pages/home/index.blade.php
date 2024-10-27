@@ -18,7 +18,7 @@
     <x-client.sections.categories />
 
     <!-- Product -->
-    <livewire:client.sections.product-list title='Product Overview' />
+    <livewire:client.sections.product-list title='Product Overview' :full=false />
 @endsection
 
 @push('modals')

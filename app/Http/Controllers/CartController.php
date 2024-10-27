@@ -42,7 +42,7 @@ class CartController extends Controller
                 $variant = ProductVariant::where('product_id', $request->id)
                     ->where('color_id', $request->color)
                     ->where('size_id', $request->size)->first();
-                if ($variant && $variant->product->state === ProductState::SHOW->value) {
+                if ($variant and $variant->product->state === ProductState::SHOW->value) {
                     if (Auth::check()) {
                         $userId = Auth::user()->id;
                         $cart = Cart::where('user_id', $userId)

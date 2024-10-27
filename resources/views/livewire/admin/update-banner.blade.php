@@ -33,7 +33,7 @@
                 @error('banner.pic')
                     <span class="text-danger fst-italic">{{ $message }}</span>
                 @enderror
-                @if ($banner->pic || $banner->path)
+                @if ($banner->pic or $banner->path)
                     <div class="mt-2 text-center">
                         @if (is_object($banner->pic) && method_exists($banner->pic, 'temporaryUrl'))
                             <img class="rounded" src="{{ $banner->pic->temporaryUrl() }}" alt="preview" width="720px">

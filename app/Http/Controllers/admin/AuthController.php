@@ -34,7 +34,7 @@ class AuthController extends Controller
         if (Auth::attemptWhen(
             $credentials,
             function (User $user) {
-                return $user->state === UserState::ACTIVED->value &&
+                return $user->state === UserState::ACTIVED->value and
                     $user->hasRole(UserRole::ADMIN->value);
             }
         )) {

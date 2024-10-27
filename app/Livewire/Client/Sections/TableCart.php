@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class TableCart extends Component
 {
@@ -99,7 +100,7 @@ class TableCart extends Component
         try {
             $cityName = trim($this->note['city'] ?? '');
             $districtName = isset($this->note['district']) ? trim($this->note['district']) : '';
-            if ($cityName && $districtName) {
+            if ($cityName and $districtName) {
                 $cityId = Location::where('name', $cityName)
                     ->where('level', LocationLevel::CITY->value)
                     ->value('id');
@@ -197,8 +198,8 @@ class TableCart extends Component
 
         if ($this->coupon) {
             if (
-                $this->coupon->start_date < now() &&
-                $this->coupon->expiry_date > now() &&
+                $this->coupon->start_date < now() and
+                $this->coupon->expiry_date > now() and
                 $this->coupon->count < $this->coupon->limit
             ) {
                 if ($this->subTotal >= $this->coupon->min) {
@@ -206,7 +207,7 @@ class TableCart extends Component
                         $this->discount = $this->coupon->value;
                     } else if ($this->coupon->type === CouponType::PERCENT->value) {
                         $this->discount = ($this->subTotal * $this->coupon->value) / 100;
-                        if ($this->coupon->max && $this->discount > $this->coupon->max) {
+                        if ($this->coupon->max and $this->discount > $this->coupon->max) {
                             $this->discount = $this->coupon->max;
                         }
                     }
@@ -295,7 +296,13 @@ class TableCart extends Component
                     'method' => $this->method
                 ],
                 [
-                    'selected' => 'required|array|min:1',
+                    // 'selected' => 'required|array|min:1',
+                    'selected' => [
+                        'required',
+                        'array',
+                        'min:1',
+                        Rule::in($this->carts->pluck('id')->toArray()),
+                    ],
                     'number' => 'required|numeric|digits:10',
                     'city' => [
                         'required',
@@ -389,7 +396,7 @@ class TableCart extends Component
                             $discount = $coupon->value;
                         } else if ($coupon->type === CouponType::PERCENT->value) {
                             $discount = ($total * $coupon->value) / 100;
-                            if ($coupon->max && $discount > $coupon->max) {
+                            if ($coupon->max and $discount > $coupon->max) {
                                 $discount = $coupon->max;
                             }
                         }

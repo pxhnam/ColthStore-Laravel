@@ -4,14 +4,13 @@
     'type' => '',
     'pic' => '',
     'link' => 'javascript:void(0)',
-    'cost' => '$0',
+    'cost' => '0 đ',
 ])
 <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item {{ $type }}">
     <!-- Block2 -->
     <div class="block2">
         <div class="block2-pic hov-img0">
-            {{-- <img src="{{ asset('assets/client/images/' . $pic) }}" alt="{{$name}}" /> --}}
-            <img src="{{ asset($pic) }}" alt="{{ $name }}"
+            <img src="{{ asset('storage/'.$pic) }}" alt="{{ $name }}"
                 onerror="this.onerror=null; this.src='{{ asset('storage/uploads/Image-Not-Found.jpg') }}';" />
 
             <a href="#" data-id='{{ $id }}'

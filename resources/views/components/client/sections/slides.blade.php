@@ -3,7 +3,7 @@
         <div class="slick1">
             @foreach ($banners ?? [] as $index => $banner)
                 @php
-                    if (!isset($i) || $i > 2) {
+                    if (!isset($i) or $i > 2) {
                         $i = 0;
                     }
                 @endphp

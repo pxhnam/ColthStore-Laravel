@@ -26,7 +26,7 @@ class TableOrder extends AdminComponent
             $states = InvoiceState::getValues();
             $currentIndex = array_search($currentState, $states);
 
-            if ($currentIndex !== false && $currentIndex < count($states) - 1) {
+            if ($currentIndex !== false and $currentIndex < count($states) - 1) {
                 $nextState = $states[$currentIndex + 1];
                 $order->state = $nextState;
                 $order->save();
@@ -45,7 +45,7 @@ class TableOrder extends AdminComponent
             $states = InvoiceState::getValues();
             $currentIndex = array_search($currentState, $states);
 
-            if ($currentIndex !== false && $currentIndex > 0) {
+            if ($currentIndex !== false and $currentIndex > 0) {
                 $previousState = $states[$currentIndex - 1];
                 $order->state = $previousState;
                 $order->save();

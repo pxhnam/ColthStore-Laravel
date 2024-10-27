@@ -22,7 +22,7 @@
                 @error('color.pic')
                     <span class="text-danger fst-italic">{{ $message }}</span>
                 @enderror
-                @if ($color->pic || $color->url)
+                @if ($color->pic or $color->url)
                     <div class="mt-2 text-center">
                         @if (is_object($color->pic) && method_exists($color->pic, 'temporaryUrl'))
                             <img class="rounded" src="{{ $color->pic->temporaryUrl() }}" alt="preview"

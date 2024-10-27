@@ -33,7 +33,7 @@
                 @error('category.pic')
                     <span class="text-danger fst-italic">{{ $message }}</span>
                 @enderror
-                @if ($category->pic || $category->url)
+                @if ($category->pic or $category->url)
                     <div class="mt-2 text-center">
                         @if (is_object($category->pic) && method_exists($category->pic, 'temporaryUrl'))
                             <img class="rounded" src="{{ $category->pic->temporaryUrl() }}" alt="preview"
